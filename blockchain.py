@@ -21,3 +21,16 @@ class BlockChain:
         self.pending_transactions = []
         self.chain.append(block)
         return block
+
+    @property
+    def last_block(self):
+        return self.chain[-1]
+
+    def new_transaction(self, sender, recipient, amount):
+        transaction ={
+            'sender' : sender,
+            'recipient' : recipient,
+            'amount' : amount,
+        }
+        self.pending_transactions.append(transaction)
+        return self.last_block['index'] + 1
