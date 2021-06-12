@@ -1,6 +1,6 @@
 import hashlib
 import json
-from time import time
+import time
 
 class BlockChain:
 
@@ -34,3 +34,27 @@ class BlockChain:
         }
         self.pending_transactions.append(transaction)
         return self.last_block['index'] + 1
+
+    def hash(self, block):
+        string_object = json.dumps(block, sort_keys=True)
+        block_string = string_object.encode()
+
+        raw_hash = hashlib.sha256(block_string)
+        hex_hash = raw_hash.hexdigest()
+
+        return hex_hash
+
+blockchain = BlockChain()
+
+t1 = blockchain.new_transaction('seth', 'mike', '15 BTC')
+t2 = blockchain.new_transaction('mike', 'nikki', '12 BTC')
+t3 = blockchain.new_transaction('nikki', 'gabe', '10 BTC')
+blockchain.new_block(4242)
+
+t4 = blockchain.new_transaction('gabe', 'kyle', '8 BTC')
+t5 = blockchain.new_transaction('kyle', 'lou', '6 BTC')
+t6 = blockchain.new_transaction('lou', 'evan', '4 BTC')
+t6 = blockchain.new_transaction('evan', '', '2 BTC')
+blockchain.new_block(4242)
+
+print('blockchain:', blockchain.chain)
